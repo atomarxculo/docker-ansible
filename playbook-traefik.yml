@@ -1,0 +1,7 @@
+---
+
+- hosts: loadbalancer
+  become: yes
+  roles:
+    - name: base
+    - name: traefik

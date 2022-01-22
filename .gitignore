@@ -1,0 +1,4 @@
+.ansible_download_cache
+.vagrant
+credentials/*
+!nomad_jobs/artifacts/hello-world-java/HelloWorld.jar

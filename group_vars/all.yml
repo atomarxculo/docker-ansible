@@ -1,0 +1,15 @@
+---
+
+traefik_version: "2.4.8"
+
+# If multiple network interfaces exist in the VM, specify the one matching
+# the IP range defined in Vagrant.
+network_interface: enp0s8
+
+# Set interface manually (see above) or fall back to default IPv4 address.
+network_interface_ipv4: "{{ hostvars[inventory_hostname]['ansible_' + network_interface]['ipv4']['address'] | default(hostvars[inventory_hostname]['ansible_default_ipv4']['address']) }}" # noqa 204
+
+# When provisioned with Vagrant, use the list `vagrant_docker_node_ips` passed
+# as group variable. Otherwise use `ansible_host` from the inventory file.
+docker_node_ips: "{{ vagrant_docker_node_ips | default(groups['consul_nomad'] | map('extract', hostvars, 'ansible_host') | list) }}"
+loadbalancer_ip: "{{ vagrant_loadbalancer_ip | default(hostvars['loadbalancer']['ansible_host']) }}"
